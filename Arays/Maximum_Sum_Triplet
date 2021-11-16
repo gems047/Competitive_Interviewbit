@@ -1,1 +1,24 @@
+class Solution:
+    # @param A : list of integers
+    # @return an integer
+    def solve(self, A):
+        n = len(A)
+        right_max = [-1]*n
+        maxi = A[-1]
+        for i in reversed(range(n-1)):
+            right_max[i] = maxi
+            maxi = max(maxi ,A[i])
+
+        left = []
+        max_sum = 0
+        for i in range(n):
+            if(left):
+                while left and left[-1] >= right_max[i]:
+                    left.pop()
+                while left and left[-1] < A[i] and A[i] < right_max[i]:
+                    max_sum = max(max_sum , left[-1] +A[i] + right_max[i])
+                    left.pop()
+
+            left.append(A[i])
+        return max_sum    
 
